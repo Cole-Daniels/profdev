@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student portal · Hull campus prototype</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="portal">
+        <div class="header">
+            <i class="fas fa-university"></i>
+            <h1>University of Hull · Student Portal</h1>
+            <span><i class="fas fa-user-graduate"></i> Alex Morgan</span>
+        </div>
+
+        <!-- Tab navigation -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="timetable"><i class="fas fa-calendar-alt"></i> Timetable</button>
+            <button class="tab-btn" data-tab="map"><i class="fas fa-map-marked-alt"></i> Campus map</button>
+            <button class="tab-btn" data-tab="booking"><i class="fas fa-door-open"></i> Rooms & meetings</button>
+        </div>
+
+        <!-- ================= TIMETABLE PANEL ================= -->
+        <div id="timetable" class="panel active">
+            <h2><i class="fas fa-clock"></i> My timetable · Week 12, 2026</h2>
+            <div class="week-grid" id="weekGrid">
+                <div class="day-column" data-day="Monday" data-date="2026-03-16">
+                    <div class="day-header">Monday</div>
+                    <div class="day-slots" id="slots-Monday"></div>
+                </div>
+                <div class="day-column" data-day="Tuesday" data-date="2026-03-17">
+                    <div class="day-header">Tuesday</div>
+                    <div class="day-slots" id="slots-Tuesday"></div>
+                </div>
+                <div class="day-column" data-day="Wednesday" data-date="2026-03-18">
+                    <div class="day-header">Wednesday</div>
+                    <div class="day-slots" id="slots-Wednesday"></div>
+                </div>
+                <div class="day-column" data-day="Thursday" data-date="2026-03-19">
+                    <div class="day-header">Thursday</div>
+                    <div class="day-slots" id="slots-Thursday"></div>
+                </div>
+                <div class="day-column" data-day="Friday" data-date="2026-03-20">
+                    <div class="day-header">Friday</div>
+                    <div class="day-slots" id="slots-Friday"></div>
+                </div>
+                <div class="day-column weekend-disabled" data-day="Saturday" data-date="2026-03-21">
+                    <div class="day-header">Saturday <i class="fas fa-lock" title="Bookings disabled"></i></div>
+                    <div class="day-slots" id="slots-Saturday">
+                        <div class="weekend-lock"><i class="fas fa-ban"></i><br>No meetings<br>on weekends</div>
+                    </div>
+                </div>
+                <div class="day-column weekend-disabled" data-day="Sunday" data-date="2026-03-22">
+                    <div class="day-header">Sunday <i class="fas fa-lock" title="Bookings disabled"></i></div>
+                    <div class="day-slots" id="slots-Sunday">
+                        <div class="weekend-lock"><i class="fas fa-ban"></i><br>No meetings<br>on weekends</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tt-note">
+                <i class="fas fa-info-circle"></i> Click any lesson for details, or click blank space (Mon–Fri) to schedule a meeting.
+            </div>
+        </div>
+
+        <!-- ================= MAP PANEL ================= -->
+        <div id="map" class="panel">
+            <h2><i class="fas fa-map-pin"></i> Hull campus map</h2>
+            <div class="map-container">
+                <div class="campus-map">
+                    <a href="campus-map.png" target="_blank" rel="noopener" title="Open full-size map">
+                        <img src="campus-map.png"
+                             alt="Map of the University of Hull campus"
+                             class="campus-map-img"
+                             onerror="this.onerror=null; this.src=''; this.alt='Map image not found — please add campus-map.png to the project folder.'; this.parentElement.parentElement.classList.add('img-missing');">
+                    </a>
+                </div>
+                <p class="map-caption">
+                    <i class="fas fa-location-dot"></i> Click the map to open a full-size version.
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= BOOKING PANEL ================= -->
+        <div id="booking" class="panel">
+            <h2><i class="fas fa-calendar-check"></i> Book a room or meeting</h2>
+            <div class="booking-grid">
+
+                <!-- General room booking -->
+                <div class="card">
+                    <h3><i class="fas fa-door-open"></i> Book a general room</h3>
+                    <div class="form-group">
+                        <label>Room</label>
+                        <select id="roomSelect">
+                            <option>Lecture Hall A</option>
+                            <option>Lecture Hall B</option>
+                            <option>Computer Lab 3</option>
+                            <option>Seminar Room 204</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="roomDate" value="2026-03-16">
+                    </div>
+                    <div class="form-group">
+                        <label>Time slot</label>
+                        <select id="roomTime">
+                            <option>09:00 – 10:00</option>
+                            <option>11:00 – 12:00</option>
+                            <option>13:00 – 14:00</option>
+                            <option>15:00 – 16:00</option>
+                        </select>
+                    </div>
+                    <button id="bookRoomBtn"><i class="fas fa-check"></i> Book room</button>
+                    <div class="booking-list" id="roomBookingsList"></div>
+                </div>
+
+                <!-- Library room booking -->
+                <div class="card library-card">
+                    <h3><i class="fas fa-book-open"></i> Book a library room</h3>
+                    <div class="form-group">
+                        <label>Library space</label>
+                        <select id="librarySelect">
+                            <option>Library Pod 1</option>
+                            <option>Library Pod 2</option>
+                            <option>Library Pod 3</option>
+                            <option>Group Study Room A</option>
+                            <option>Group Study Room B</option>
+                            <option>Silent Study Booth</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="libraryDate" value="2026-03-19">
+                    </div>
+                    <div class="form-group">
+                        <label>Time slot</label>
+                        <select id="libraryTime">
+                            <option>09:00 – 10:00</option>
+                            <option>10:00 – 11:00</option>
+                            <option>11:00 – 12:00</option>
+                            <option>13:00 – 14:00</option>
+                            <option>14:00 – 15:00</option>
+                            <option>15:00 – 16:00</option>
+                            <option>16:00 – 17:00</option>
+                        </select>
+                    </div>
+                    <button id="bookLibraryBtn"><i class="fas fa-check"></i> Book library space</button>
+                    <div class="booking-list" id="libraryBookingsList"></div>
+                </div>
+
+                <!-- Meeting scheduling -->
+                <div class="card" style="grid-column: 1 / -1;">
+                    <h3><i class="fas fa-handshake"></i> Schedule a meeting <small style="font-size:0.75rem; color:#7b98b3; font-weight:400; margin-left:6px;">(weekdays only)</small></h3>
+                    <div class="meeting-form-row">
+                        <div class="form-group">
+                            <label>Reason / title</label>
+                            <input type="text" id="meetReason" placeholder="e.g., Group project sync" value="Project discussion">
+                        </div>
+                        <div class="form-group">
+                            <label>Meeting with</label>
+                            <select id="meetWithType">
+                                <option value="students">Students</option>
+                                <option value="lecturer">Lecturer</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="meetLecturerGroup" style="display:none;">
+                            <label>Select lecturer</label>
+                            <select id="meetLecturer"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date (Mon–Fri)</label>
+                            <input type="date" id="meetDate" value="2026-03-19">
+                        </div>
+                        <div class="form-group">
+                            <label>Time</label>
+                            <input type="time" id="meetTime" value="14:00">
+                        </div>
+                        <div class="form-group">
+                            <label>Location (optional)</label>
+                            <input type="text" id="meetLocation" placeholder="e.g., Library pod 2" value="Library pod 2">
+                        </div>
+                    </div>
+                    <button id="scheduleMeetingBtn"><i class="fas fa-calendar-plus"></i> Schedule meeting</button>
+                    <div class="booking-list" id="meetingBookingsList"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: lesson details -->
+    <div id="lessonModal" class="modal-overlay">
+        <div class="modal">
+            <h3><i class="fas fa-circle-info"></i> Lesson details</h3>
+            <div class="slot-info" id="lessonModalHeader">Lesson</div>
+            <dl class="lesson-details" id="lessonDetails"></dl>
+            <div class="modal-actions">
+                <button class="secondary" id="lessonCloseBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: schedule / edit meeting -->
+    <div id="meetingModal" class="modal-overlay">
+        <div class="modal">
+            <h3><i class="fas fa-calendar-plus"></i> Schedule a meeting</h3>
+            <div class="slot-info" id="modalSlotInfo">Selected slot</div>
+            <div class="form-group">
+                <label>Reason / title</label>
+                <input type="text" id="modalReason" placeholder="Meeting reason" value="Study group">
+            </div>
+            <div class="form-group">
+                <label>Meeting with</label>
+                <select id="modalWithType">
+                    <option value="students">Students</option>
+                    <option value="lecturer">Lecturer</option>
+                </select>
+            </div>
+            <div class="form-group" id="modalLecturerGroup" style="display:none;">
+                <label>Select lecturer</label>
+                <select id="modalLecturer"></select>
+            </div>
+            <div class="form-group">
+                <label>Date (Mon–Fri)</label>
+                <input type="date" id="modalDate" value="2026-03-19">
+            </div>
+            <div class="form-group">
+                <label>Time</label>
+                <input type="time" id="modalTime" value="10:00">
+            </div>
+            <div class="form-group">
+                <label>Location (optional)</label>
+                <input type="text" id="modalLocation" placeholder="e.g., Library pod 2" value="Library pod 2">
+            </div>
+            <div class="modal-actions">
+                <button class="secondary" id="modalCancelBtn">Cancel</button>
+                <button id="modalConfirmBtn">Schedule</button>
+            </div>
+            <div class="fine-print"><i class="fas fa-info-circle"></i> Meetings appear on your timetable. Weekend dates are not allowed.</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
